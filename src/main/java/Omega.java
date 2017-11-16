@@ -1,31 +1,70 @@
 public class Omega {
 
-    private int[] elements;
+    private boolean[] elements;
+    private double[] probabilities;
+    private String[] names;
 
-    public final Event EMPTY = new Event("Empty", this);
-    public final Event OMEGA;
+    private static Event OMEGA = null;
+    private static Event EMPTY = null;
 
     public Omega(int size) {
-        elements = new int[size];
-        for (int i=0; i<size; i++)
-            elements[i] = i+1;
-        OMEGA = new Event("Omega", this, elements);
+        elements = new boolean[size];
+        probabilities = new double[size];
+        names = new String[size];
+        for (int i=0; i<size; i++) {
+            probabilities[i] = -1;
+            elements[i] = true;
+            names[i] = String.valueOf(i+1);
+        }
+        EMPTY = new Event("Empty", this);
+        OMEGA = new Event("Omega", this, getElements());
     }
+
+    public void setProbability(int no, double p) {
+        probabilities[no] = p;
+    }
+
+    public Event getEmpty() {
+        if (EMPTY == null)
+            EMPTY = new Event("Empty", this);
+        return EMPTY;
+    }
+
+    public Event getOmega() {
+        if (OMEGA == null)
+            OMEGA = new Event("Omega", this, getElements());
+        return OMEGA;
+    }
+
+    private boolean[] getElements() {
+        return elements;
+    }
+
+    public Omega(String... names) {
+        elements = new boolean[names.length];
+        this.names = names;
+        for (int i=0; i<names.length; i++)
+            elements[i] = true;
+    }
+
     public int size() {
         return elements.length;
     }
 
-    public int get(int no) {
-        return elements[no];
+    public double[] getProbabilities() {
+        return probabilities;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Omega = {");
+        StringBuilder sb = new StringBuilder("OMEGA = {");
         for (int i=0; i<elements.length-1; i++)
-            sb.append("\"").append(elements[i]).append("\", ");
-        sb.append("\"").append(elements[elements.length-1]).append("\"}");
+            sb.append("\"").append(names[i]).append("\"; ");
+        sb.append("\"").append(names[elements.length-1]).append("\"}");
         return sb.toString();
     }
 
+    public String getName(int i) {
+        return names[i];
+    }
 }
