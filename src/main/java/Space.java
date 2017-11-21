@@ -11,6 +11,17 @@ public class Space {
         generateAll();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Space space = (Space) o;
+
+        if (!omega.equals(space.omega)) return false;
+        return events.equals(space.events);
+    }
+
     public boolean addEvent(Event e) {
         if (!contain(e)) {
             events.add(e);
