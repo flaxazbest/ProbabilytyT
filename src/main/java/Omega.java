@@ -119,11 +119,11 @@ public class Omega {
         System.out.println("Max = " + max);
         for (long i=0; i<max; i++) {
             if (i%100000 == 0) {
-                System.out.println(i + "checks done;  " + list.size() + " spaces");
+                App.log.info(i + "checks done;  " + list.size() + " spaces");
             }
             if (i > per) {
                 per += deca;
-                System.out.println( String.format("%.2f",per/max*100.0) + "% passed..." + list.size() + " spaces");
+                App.log.info(String.format("%.2f",per/max*100.0) + "% passed..." + list.size() + " spaces");
             }
 
             Space s = new Space(this);
@@ -145,6 +145,7 @@ public class Omega {
             }
             if (toAdd) {
                 s.setNumber(list.size());
+                App.log.warn(s);
                 list.add(s);
             }
         }

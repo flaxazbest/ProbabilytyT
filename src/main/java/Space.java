@@ -104,7 +104,7 @@ public class Space {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("S" + number + " = {\n");
+        StringBuilder sb = new StringBuilder("\nS" + number + " = {\n");
         for (Event e: events)
             sb.append("\t").append(e).append("\n");
         sb.append("}");

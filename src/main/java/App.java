@@ -1,8 +1,24 @@
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import java.util.LinkedList;
 
 public class App {
 
+    public static Logger log = Logger.getLogger(App.class);
+
     public static void main(String[] args) {
+
+        PropertyConfigurator.configure("log4j.properties");
+//        try {
+//            LogManager.getLogManager().readConfiguration(
+//                    App.class.getResourceAsStream("log4j.properties"));
+//        } catch (IOException e) {
+//            System.err.println("Could not setup logger configuration: " + e.toString());
+//        }
+
+        log.info("Start at ");
+
         Omega O = new Omega(4);
         //Space space = new Space(O);
        /*
@@ -22,10 +38,10 @@ public class App {
         System.out.println(space);
         */
         LinkedList<Space> list = (LinkedList<Space>) O.getAll();
-        for (Space s: list) {
-            System.out.println(s);
-            System.out.println();
-        }
+//        for (Space s: list) {
+//            System.out.println(s);
+//            System.out.println();
+//        }
         System.out.println(list.size());
     }
 
