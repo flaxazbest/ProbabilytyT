@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,21 +74,82 @@ public class Omega {
 
     public List<Space> getAllSpaces() {
         LinkedList<Space> result = new LinkedList<Space>();
-
+/*
         int max = (int) Math.pow(2, size());
+        int n, p;
         for (int i=0; i<max; i++) {
-            for (int j=0; j<size(); j++) {
-                int bits =
+            Space s = new Space(this);
+            n = i; p = 1;
+            while (n > 0) {
+                if ((n & 0x1) == 1) {
+                    s.addEvent(new Event(String.valueOf(p), this, p));
+                }
+                n >>= 1;
+                p++;
             }
-        }
-
-
-
+            s.generateAll();
+            boolean toAdd = true;
+            for (Space space: result) {
+                if (space.equals(s)) {
+                    toAdd = false;
+                    break;
+                }
+            }
+            if (toAdd) {
+                s.setNumber(result.size());
+                result.add(s);
+            }
+        }*/
         return result;
     }
 
-    private boolean isBit(int number, int no) {
-        return (no & 0x1) == 1;
+    public LinkedList<Space> getAll() {
+        LinkedList<Space> list = new LinkedList<Space>();
+
+        Space big = new Space(this);
+        for (int i=0; i<size(); i++) {
+            big.addEvent(new Event(String.valueOf(i+1), this, i+1));
+        }
+        big.generateAll();
+        ArrayList<Event> allEvents = new ArrayList<Event>(big.getEvents());
+
+        long max = (long) Math.pow(2, Math.pow(2, size()));
+        long n, p;
+        double deca = max / 100.0, per = 0.0;
+        System.out.println("Max = " + max);
+        for (long i=0; i<max; i++) {
+            if (i%100000 == 0) {
+                System.out.println(i + "checks done;  " + list.size() + " spaces");
+            }
+            if (i > per) {
+                per += deca;
+                System.out.println( String.format("%.2f",per/max*100.0) + "% passed..." + list.size() + " spaces");
+            }
+
+            Space s = new Space(this);
+            n = i; p = 0;
+            while (n > 0) {
+                if ((n & 0x1) == 1) {
+                    s.addEvent(allEvents.get((int)p));
+                }
+                n >>= 1;
+                p++;
+            }
+            s.generateAll();
+            boolean toAdd = true;
+            for (Space space: list) {
+                if (space.equals(s)) {
+                    toAdd = false;
+                    break;
+                }
+            }
+            if (toAdd) {
+                s.setNumber(list.size());
+                list.add(s);
+            }
+        }
+
+        return list;
     }
 
 }

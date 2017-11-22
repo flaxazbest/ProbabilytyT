@@ -2,12 +2,18 @@ import java.util.LinkedList;
 
 public class Space {
 
+    private int number;
     private Omega omega;
     private LinkedList<Event> events;
 
     public Space(Omega omega) {
+        this(omega, 1);
+    }
+
+    public Space(Omega omega, int number) {
         this.omega = omega;
         events = new LinkedList<Event>();
+        this.number = number;
         generateAll();
     }
 
@@ -19,7 +25,15 @@ public class Space {
         Space space = (Space) o;
 
         if (!omega.equals(space.omega)) return false;
-        return events.equals(space.events);
+        if (events.size() != space.events.size()) return false;
+        for (Event e: events) {
+            boolean in = false;
+            for (Event se: space.events) {
+                in |= (e.equals(se));
+            }
+            if (!in) return false;
+        }
+        return true;
     }
 
     public boolean addEvent(Event e) {
@@ -80,9 +94,17 @@ public class Space {
         return false;
     }
 
+    public LinkedList<Event> getEvents() {
+        return events;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("S1 = {\n");
+        StringBuilder sb = new StringBuilder("S" + number + " = {\n");
         for (Event e: events)
             sb.append("\t").append(e).append("\n");
         sb.append("}");

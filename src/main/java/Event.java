@@ -121,7 +121,8 @@ public class Event {
         if (elements == null) {
             return "Empty = {}";
         }
-        StringBuilder sb = new StringBuilder(description + " = {");
+        StringBuilder sb = new StringBuilder("{");
+//        StringBuilder sb = new StringBuilder(description + " = {");
         boolean flag = false;
         for (int i=0; i<elements.length-1; i++)
             if (elements[i]) {
