@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public class Omega {
 
     private boolean[] elements;
@@ -67,4 +70,24 @@ public class Omega {
     public String getName(int i) {
         return names[i];
     }
+
+    public List<Space> getAllSpaces() {
+        LinkedList<Space> result = new LinkedList<Space>();
+
+        int max = (int) Math.pow(2, size());
+        for (int i=0; i<max; i++) {
+            for (int j=0; j<size(); j++) {
+                int bits =
+            }
+        }
+
+
+
+        return result;
+    }
+
+    private boolean isBit(int number, int no) {
+        return (no & 0x1) == 1;
+    }
+
 }
