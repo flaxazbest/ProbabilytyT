@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -114,12 +116,20 @@ public class Omega {
         ArrayList<Event> allEvents = new ArrayList<Event>(big.getEvents());
 
         long max = (long) Math.pow(2, Math.pow(2, size()));
-        long n, p;
+        long n, p, k;
         double deca = max / 100.0, per = 0.0;
         System.out.println("Max = " + max);
+        long start = System.currentTimeMillis();
+        long finish;
         for (long i=0; i<max; i++) {
-            if (i%100000 == 0) {
+            if (i%10000 == 1) {
                 App.log.info(i + "checks done;  " + list.size() + " spaces");
+                finish = System.currentTimeMillis();
+                k = (finish - start) / 1000;
+                String stat = "Elapsed " + myToTime(k) + " Finished after ";
+                k = ( k * (max - i) ) / i;
+                stat = stat + myToTime(k);
+                App.log.info(stat);
             }
             if (i > per) {
                 per += deca;
@@ -151,6 +161,16 @@ public class Omega {
         }
 
         return list;
+    }
+
+    private String myToTime(long ms) {
+        long d = ms/86400;
+        ms -= d * 86400;
+        long h = ms/3600;
+        ms -= h * 3600;
+        long m = ms / 60;
+        ms -= m*60;
+        return String.format("%03d:%02d:%02d:%02d",d,h,m,ms);
     }
 
 }

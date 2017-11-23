@@ -108,6 +108,7 @@ public class Space {
         for (Event e: events)
             sb.append("\t").append(e).append("\n");
         sb.append("}");
+        sb.append("size " + events.size() + "\n\n");
         return sb.toString();
     }
 
